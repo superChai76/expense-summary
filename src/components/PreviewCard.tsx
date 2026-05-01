@@ -30,7 +30,7 @@ function PromptPayQr({ phone, total }: { phone: string; total: number }) {
   useEffect(() => {
     const payload = generatePromptPayPayload(phone, total);
     QRCode.toDataURL(payload, {
-      width: 200,
+      width: 240,
       margin: 2,
       color: { dark: "#18181b", light: "#ffffff" },
     })
@@ -41,10 +41,8 @@ function PromptPayQr({ phone, total }: { phone: string; total: number }) {
   if (!dataUrl) return null;
 
   return (
-    <div className="flex justify-center">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={dataUrl} alt="QR" style={{ width: 120, height: 120, borderRadius: 8 }} />
-    </div>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={dataUrl} alt="QR" style={{ width: 140, height: 140 }} />
   );
 }
 
@@ -75,25 +73,29 @@ const CardContent = ({
   const fmt = (n: number) =>
     n.toLocaleString("th-TH", { minimumFractionDigits: 2 });
 
+  const hasQrSection = qrSource || hasValidQR;
+
   return (
     <div
       style={{
         background: "#ffffff",
-        borderRadius: 16,
-        padding: 32,
+        borderRadius: 20,
+        padding: "36px 32px",
         fontFamily: "system-ui, -apple-system, sans-serif",
         color: "#18181b",
         width: "100%",
-        maxWidth: 380,
+        maxWidth: 460,
       }}
     >
-      <div style={{ textAlign: "center", marginBottom: 20 }}>
+      {/* Header */}
+      <div style={{ textAlign: "center", marginBottom: 28 }}>
         <div
           style={{
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: 700,
-            color: "#18181b",
+            color: "#09090b",
             lineHeight: 1.3,
+            letterSpacing: -0.01,
           }}
         >
           {displayName}
@@ -101,16 +103,22 @@ const CardContent = ({
         {note.trim() && (
           <div
             style={{
-              fontSize: 12,
+              fontSize: 13,
               color: "#a1a1aa",
-              marginTop: 6,
-              lineHeight: 1.5,
+              marginTop: 8,
+              lineHeight: 1.6,
             }}
           >
             {note.trim()}
           </div>
         )}
-        <div style={{ fontSize: 10, color: "#d4d4d8", marginTop: 6 }}>
+        <div
+          style={{
+            fontSize: 11,
+            color: "#d4d4d8",
+            marginTop: 8,
+          }}
+        >
           {new Date().toLocaleDateString("en-GB", {
             day: "numeric",
             month: "short",
@@ -119,12 +127,13 @@ const CardContent = ({
         </div>
       </div>
 
+      {/* Items */}
       {items.length > 0 && (
         <div
           style={{
             borderTop: "1px solid #f4f4f5",
-            paddingTop: 12,
-            marginBottom: 12,
+            paddingTop: 16,
+            paddingBottom: 4,
           }}
         >
           {items.map((item) => {
@@ -136,22 +145,24 @@ const CardContent = ({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "5px 0",
+                  padding: "8px 0",
                 }}
               >
                 <div
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 8,
+                    gap: 10,
                     minWidth: 0,
                   }}
                 >
-                  <span style={{ fontSize: 12 }}>{cat.icon}</span>
+                  <span style={{ fontSize: 14, width: 20, textAlign: "center" }}>
+                    {cat.icon}
+                  </span>
                   <span
                     style={{
-                      fontSize: 13,
-                      color: "#52525b",
+                      fontSize: 14,
+                      color: "#3f3f46",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
                       whiteSpace: "nowrap",
@@ -162,11 +173,12 @@ const CardContent = ({
                 </div>
                 <span
                   style={{
-                    fontSize: 13,
+                    fontSize: 14,
                     fontWeight: 600,
                     color: "#18181b",
                     flexShrink: 0,
-                    marginLeft: 12,
+                    marginLeft: 16,
+                    fontVariantNumeric: "tabular-nums",
                   }}
                 >
                   ฿{fmt(item.amount)}
@@ -177,12 +189,13 @@ const CardContent = ({
         </div>
       )}
 
+      {/* Category Summary */}
       {categoryEntries.length > 1 && (
         <div
           style={{
             borderTop: "1px solid #f4f4f5",
-            paddingTop: 10,
-            marginBottom: 12,
+            paddingTop: 14,
+            paddingBottom: 4,
           }}
         >
           <div
@@ -191,8 +204,8 @@ const CardContent = ({
               fontWeight: 600,
               color: "#a1a1aa",
               textTransform: "uppercase",
-              letterSpacing: 1,
-              marginBottom: 6,
+              letterSpacing: 1.2,
+              marginBottom: 8,
             }}
           >
             By Category
@@ -206,16 +219,23 @@ const CardContent = ({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "3px 0",
+                  padding: "4px 0",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ fontSize: 11 }}>{cat.icon}</span>
-                  <span style={{ fontSize: 12, color: "#71717a" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ fontSize: 12 }}>{cat.icon}</span>
+                  <span style={{ fontSize: 13, color: "#71717a" }}>
                     {cat.name}
                   </span>
                 </div>
-                <span style={{ fontSize: 12, color: "#52525b", fontWeight: 500 }}>
+                <span
+                  style={{
+                    fontSize: 13,
+                    color: "#52525b",
+                    fontWeight: 500,
+                    fontVariantNumeric: "tabular-nums",
+                  }}
+                >
                   ฿{fmt(catTotal)}
                 </span>
               </div>
@@ -224,46 +244,101 @@ const CardContent = ({
         </div>
       )}
 
+      {/* Total */}
       <div
         style={{
           borderTop: "2px solid #e4e4e7",
-          paddingTop: 12,
+          marginTop: 4,
+          paddingTop: 20,
         }}
       >
         <div
           style={{
             display: "flex",
-            alignItems: "center",
+            alignItems: "baseline",
             justifyContent: "space-between",
           }}
         >
-          <span style={{ fontSize: 14, fontWeight: 700, color: "#18181b" }}>
+          <span
+            style={{
+              fontSize: 13,
+              fontWeight: 600,
+              color: "#71717a",
+              textTransform: "uppercase",
+              letterSpacing: 0.5,
+            }}
+          >
             Total
           </span>
-          <span style={{ fontSize: 22, fontWeight: 700, color: "#18181b" }}>
+          <span
+            style={{
+              fontSize: 28,
+              fontWeight: 700,
+              color: "#09090b",
+              letterSpacing: -0.02,
+              fontVariantNumeric: "tabular-nums",
+            }}
+          >
             ฿{fmt(total)}
           </span>
         </div>
       </div>
 
-      {(qrSource || hasValidQR) && (
-        <div style={{ marginTop: 16, textAlign: "center" }}>
-          {qrSource ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={qrSource}
-              alt="QR"
-              style={{
-                width: 120,
-                height: 120,
-                objectFit: "contain",
-                borderRadius: 8,
-                display: "inline-block",
-              }}
-            />
-          ) : (
-            <PromptPayQr phone={cleaned} total={total} />
-          )}
+      {/* QR Section */}
+      {hasQrSection && (
+        <div
+          style={{
+            borderTop: "1px solid #f4f4f5",
+            marginTop: 24,
+            paddingTop: 24,
+            textAlign: "center",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 11,
+              fontWeight: 600,
+              color: "#71717a",
+              marginBottom: 4,
+            }}
+          >
+            QR Code สำหรับชำระเงิน
+          </div>
+          <div
+            style={{
+              fontSize: 10,
+              color: "#d4d4d8",
+              marginBottom: 16,
+            }}
+          >
+            สแกนเพื่อโอนเงิน
+          </div>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: 16,
+              border: "1px solid #f4f4f5",
+              borderRadius: 12,
+              background: "#fafafa",
+            }}
+          >
+            {qrSource ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={qrSource}
+                alt="QR"
+                style={{
+                  width: 140,
+                  height: 140,
+                  objectFit: "contain",
+                }}
+              />
+            ) : (
+              <PromptPayQr phone={cleaned} total={total} />
+            )}
+          </div>
         </div>
       )}
     </div>
