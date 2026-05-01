@@ -43,42 +43,52 @@ export default function QuickAmountInput({
     n.toLocaleString("th-TH", { minimumFractionDigits: 0 });
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center justify-between gap-1">
-        <div className="flex items-center gap-0.5">
+    <div className="flex flex-col gap-2.5">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
           <ArrowBtn label="‹‹‹" onPress={() => adjust(-100)} />
           <ArrowBtn label="‹‹" onPress={() => adjust(-10)} />
           <ArrowBtn label="‹" onPress={() => adjust(-1)} />
         </div>
 
-        <div className="px-3 py-1 min-w-[100px] text-center">
-          <div className="text-2xl font-bold text-neutral-900 tabular-nums tracking-tight">
+        <div className="min-w-[90px] text-center select-none">
+          <span className="text-2xl font-bold text-neutral-900 tabular-nums tracking-tight">
             ฿{fmt(amount)}
-          </div>
+          </span>
         </div>
 
-        <div className="flex items-center gap-0.5">
+        <div className="flex items-center">
           <ArrowBtn label="›" onPress={() => adjust(1)} />
           <ArrowBtn label="››" onPress={() => adjust(10)} />
           <ArrowBtn label="›››" onPress={() => adjust(100)} />
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2 justify-center">
+        {[100, 500, 1000].map((val) => (
+          <button
+            key={val}
+            type="button"
+            onClick={() => adjust(val)}
+            className="rounded-full bg-neutral-100 px-5 py-1.5 text-xs font-medium text-neutral-600 hover:bg-neutral-200 active:scale-95 transition-all duration-75 select-none"
+          >
+            +{val >= 1000 ? `${val / 1000}k` : val}
+          </button>
+        ))}
         <button
           type="button"
-          className="flex-1 rounded-lg border border-neutral-200 bg-white text-[11px] font-medium py-1.5 text-neutral-400 hover:bg-neutral-50 transition-colors"
           onClick={clear}
+          className="rounded-full bg-neutral-100 px-4 py-1.5 text-xs text-neutral-400 hover:bg-neutral-200 active:scale-95 transition-all duration-75 select-none"
         >
-          Clear
+          C
         </button>
         <button
           type="button"
-          className="flex-1 rounded-lg border border-neutral-200 bg-white text-[11px] font-medium py-1.5 text-neutral-400 hover:bg-neutral-50 transition-colors disabled:opacity-40"
           onClick={undo}
           disabled={history.length === 0}
+          className="rounded-full bg-neutral-100 px-4 py-1.5 text-xs text-neutral-400 hover:bg-neutral-200 active:scale-95 transition-all duration-75 disabled:opacity-30 select-none"
         >
-          Undo
+          ↩
         </button>
       </div>
     </div>
