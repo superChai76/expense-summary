@@ -55,14 +55,6 @@ const CardContent = ({
   uploadedQrImage,
   categories,
 }: PreviewCardProps) => {
-  const grouped = items.reduce<Record<string, number>>((acc, item) => {
-    acc[item.category] = (acc[item.category] || 0) + item.amount;
-    return acc;
-  }, {});
-  const categoryEntries = Object.entries(grouped).sort(
-    (a, b) => b[1] - a[1]
-  );
-
   const cleaned = phoneNumber.replace(/[^0-9]/g, "");
   const hasValidQR =
     phoneNumber !== "" && total > 0 && cleaned.length >= 10;
@@ -128,7 +120,7 @@ const CardContent = ({
         </div>
       </div>
 
-      {/* Items */}
+      {/* Items - flat list */}
       {items.length > 0 && (
         <div style={{ marginBottom: 4 }}>
           {items.map((item) => {
@@ -177,55 +169,6 @@ const CardContent = ({
                   }}
                 >
                   ฿{fmt(item.amount)}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Category Summary */}
-      {categoryEntries.length > 1 && (
-        <div style={{ paddingTop: 8, paddingBottom: 4 }}>
-          <div
-            style={{
-              fontSize: 9,
-              fontWeight: 600,
-              color: "#a1a1aa",
-              textTransform: "uppercase",
-              letterSpacing: 1.2,
-              marginBottom: 8,
-            }}
-          >
-            By Category
-          </div>
-          {categoryEntries.map(([catName, catTotal]) => {
-            const cat = getCategoryDisplay(catName, categories);
-            return (
-              <div
-                key={catName}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "4px 0",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 12 }}>{cat.icon}</span>
-                  <span style={{ fontSize: 13, color: "#71717a" }}>
-                    {cat.name}
-                  </span>
-                </div>
-                <span
-                  style={{
-                    fontSize: 13,
-                    color: "#52525b",
-                    fontWeight: 500,
-                    fontVariantNumeric: "tabular-nums",
-                  }}
-                >
-                  ฿{fmt(catTotal)}
                 </span>
               </div>
             );

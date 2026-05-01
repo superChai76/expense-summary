@@ -5,7 +5,6 @@ import { ExpenseItem, CategoryDef, DEFAULT_CATEGORIES } from "@/lib/types";
 import BillInfoForm from "@/components/BillInfoForm";
 import AddItemForm from "@/components/AddItemForm";
 import ExpenseList from "@/components/ExpenseList";
-import CategorySummary from "@/components/CategorySummary";
 import TotalDisplay from "@/components/TotalDisplay";
 import QRGenerator from "@/components/QRGenerator";
 import QRUpload from "@/components/QRUpload";
@@ -33,6 +32,14 @@ export default function Home() {
 
   const handleDelete = (id: string) => {
     setItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const handleUpdate = (id: string, title: string, amount: number, category: string) => {
+    setItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, title, amount, category } : item
+      )
+    );
   };
 
   const handleAddCategory = (cat: CategoryDef) => {
@@ -98,13 +105,12 @@ export default function Home() {
                 items={items}
                 categories={categories}
                 onDelete={handleDelete}
+                onUpdate={handleUpdate}
               />
 
               {items.length > 0 && (
                 <div className="flex flex-col gap-5">
                   <TotalDisplay total={total} />
-                  <div className="border-t border-neutral-100" />
-                  <CategorySummary items={items} categories={categories} />
                   <div className="border-t border-neutral-100" />
                   <QRUpload
                     qrImage={qrUploadImage}
