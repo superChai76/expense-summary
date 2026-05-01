@@ -84,7 +84,8 @@ const CardContent = ({
         fontFamily: "system-ui, -apple-system, sans-serif",
         color: "#18181b",
         width: "100%",
-        maxWidth: 460,
+        minWidth: 375,
+        maxWidth: 440,
       }}
     >
       {/* Header */}
