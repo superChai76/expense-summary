@@ -72,7 +72,7 @@ export default function QuickAmountInput({
             onClick={() => adjust(val)}
             className="rounded-full bg-neutral-100 px-5 py-1.5 text-xs font-medium text-neutral-600 hover:bg-neutral-200 active:scale-95 transition-all duration-75 select-none"
           >
-            +{val >= 1000 ? `${val / 1000}k` : val}
+            +{val.toLocaleString()}
           </button>
         ))}
         <button
