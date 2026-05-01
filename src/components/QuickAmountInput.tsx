@@ -43,7 +43,7 @@ export default function QuickAmountInput({
     n.toLocaleString("th-TH", { minimumFractionDigits: 0 });
 
   return (
-    <div className="flex flex-col gap-2.5">
+    <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <ArrowBtn label="‹‹‹" onPress={() => adjust(-100)} />
@@ -51,7 +51,7 @@ export default function QuickAmountInput({
           <ArrowBtn label="‹" onPress={() => adjust(-1)} />
         </div>
 
-        <div className="min-w-[90px] text-center select-none">
+        <div className="min-w-[100px] text-center select-none px-2">
           <span className="text-2xl font-bold text-neutral-900 tabular-nums tracking-tight">
             ฿{fmt(amount)}
           </span>
@@ -70,7 +70,7 @@ export default function QuickAmountInput({
             key={val}
             type="button"
             onClick={() => adjust(val)}
-            className="rounded-full bg-neutral-100 px-5 py-1.5 text-xs font-medium text-neutral-600 hover:bg-neutral-200 active:scale-95 transition-all duration-75 select-none"
+            className="rounded-full bg-neutral-900 text-white px-4 py-1.5 text-xs font-medium hover:bg-neutral-800 active:scale-95 transition-all duration-75 select-none"
           >
             +{val.toLocaleString()}
           </button>
@@ -78,7 +78,7 @@ export default function QuickAmountInput({
         <button
           type="button"
           onClick={clear}
-          className="rounded-full bg-neutral-100 px-4 py-1.5 text-xs text-neutral-400 hover:bg-neutral-200 active:scale-95 transition-all duration-75 select-none"
+          className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs text-neutral-400 hover:bg-neutral-50 active:scale-95 transition-all duration-75 select-none"
         >
           C
         </button>
@@ -86,7 +86,7 @@ export default function QuickAmountInput({
           type="button"
           onClick={undo}
           disabled={history.length === 0}
-          className="rounded-full bg-neutral-100 px-4 py-1.5 text-xs text-neutral-400 hover:bg-neutral-200 active:scale-95 transition-all duration-75 disabled:opacity-30 select-none"
+          className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs text-neutral-400 hover:bg-neutral-50 active:scale-95 transition-all duration-75 disabled:opacity-30 select-none"
         >
           ↩
         </button>
@@ -106,7 +106,7 @@ function ArrowBtn({
     <button
       type="button"
       onClick={onPress}
-      className="w-10 h-10 flex items-center justify-center rounded-lg text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600 active:scale-90 transition-all duration-75 text-sm font-light tracking-tight select-none"
+      className="w-9 h-9 flex items-center justify-center rounded-lg text-neutral-300 hover:bg-neutral-100 hover:text-neutral-500 active:scale-90 transition-all duration-75 text-sm font-light tracking-tight select-none"
     >
       {label}
     </button>

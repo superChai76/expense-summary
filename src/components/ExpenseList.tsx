@@ -45,20 +45,20 @@ function EditRow({
   }, [title, amount, category, onSave, onCancel]);
 
   return (
-    <div className="flex flex-col gap-2 py-3 px-3 rounded-xl bg-neutral-50 border border-neutral-200">
+    <div className="flex flex-col gap-2 py-3 px-4 rounded-2xl bg-neutral-50 border border-neutral-200 shadow-sm">
       <div className="flex gap-2">
         <input
           ref={inputRef}
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="flex-1 rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-sm focus:border-neutral-400 focus:outline-none"
+          className="flex-1 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm focus:border-neutral-400 focus:outline-none"
         />
         <input
           type="number"
           value={amount || ""}
           onChange={(e) => setAmount(parseFloat(e.target.value) || 0)}
-          className="w-24 rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-sm tabular-nums focus:border-neutral-400 focus:outline-none"
+          className="w-28 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm tabular-nums focus:border-neutral-400 focus:outline-none"
           min="0"
           step="0.01"
         />
@@ -67,7 +67,7 @@ function EditRow({
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="flex-1 rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-sm focus:border-neutral-400 focus:outline-none"
+          className="flex-1 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm focus:border-neutral-400 focus:outline-none"
         >
           {categories.map((cat) => (
             <option key={cat.name} value={cat.name}>
@@ -81,7 +81,7 @@ function EditRow({
               onSave(title.trim(), amount, category);
             }
           }}
-          className="rounded-lg bg-neutral-900 text-white text-sm font-medium px-4 py-1.5 active:scale-95 transition-transform"
+          className="rounded-lg bg-neutral-900 text-white text-sm font-medium px-5 py-2 active:scale-95 transition-transform"
         >
           ✓
         </button>
@@ -100,7 +100,7 @@ export default function ExpenseList({
 
   if (items.length === 0) {
     return (
-      <div className="text-center text-neutral-300 py-8 text-sm">
+      <div className="text-center text-neutral-300 py-10 text-sm">
         No expenses yet
       </div>
     );
@@ -111,7 +111,7 @@ export default function ExpenseList({
       {items.map((item) => {
         if (editingId === item.id) {
           return (
-            <div key={item.id} className="mb-1">
+            <div key={item.id} className="py-2">
               <EditRow
                 item={item}
                 categories={categories}
@@ -129,22 +129,22 @@ export default function ExpenseList({
         return (
           <div
             key={item.id}
-            className="flex items-center justify-between py-3 border-b border-neutral-100 last:border-b-0 group cursor-pointer"
+            className="flex items-center justify-between py-4 group cursor-pointer hover:bg-neutral-50 -mx-2 px-2 rounded-xl transition-colors"
             onClick={() => setEditingId(item.id)}
           >
-            <div className="flex items-center gap-2.5 min-w-0">
-              <span className="text-sm">{cat.icon}</span>
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="text-base">{cat.icon}</span>
               <div className="flex flex-col min-w-0">
-                <span className="text-sm text-neutral-800 truncate leading-tight">
+                <span className="text-sm text-neutral-800 truncate leading-snug">
                   {item.title}
                 </span>
-                <span className="text-[11px] text-neutral-400 leading-tight">
+                <span className="text-[10px] text-neutral-300 leading-tight mt-0.5">
                   {cat.name}
                 </span>
               </div>
             </div>
-            <div className="flex items-center gap-3 shrink-0">
-              <span className="text-sm font-semibold text-neutral-800 tabular-nums">
+            <div className="flex items-center gap-4 shrink-0">
+              <span className="text-sm font-bold text-neutral-900 tabular-nums">
                 ฿
                 {item.amount.toLocaleString("th-TH", {
                   minimumFractionDigits: 2,
@@ -155,7 +155,7 @@ export default function ExpenseList({
                   e.stopPropagation();
                   onDelete(item.id);
                 }}
-                className="text-red-300 hover:text-red-500 transition-colors text-sm active:scale-90"
+                className="text-red-200 hover:text-red-400 transition-colors text-base active:scale-90"
                 title="ลบ"
               >
                 🗑

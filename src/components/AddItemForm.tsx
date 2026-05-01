@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { CategoryDef, DEFAULT_CATEGORIES } from "@/lib/types";
 import AddCategoryModal from "@/components/AddCategoryModal";
 import QuickAmountInput from "@/components/QuickAmountInput";
@@ -20,6 +20,7 @@ export default function AddItemForm({
   const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState<string>(DEFAULT_CATEGORIES[0].name);
   const [showAddCategory, setShowAddCategory] = useState(false);
+  const titleRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,15 +28,17 @@ export default function AddItemForm({
     onAdd(title.trim(), amount, category);
     setTitle("");
     setAmount(0);
+    titleRef.current?.focus();
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         <input
+          ref={titleRef}
           type="text"
           placeholder="What did you spend on?"
-          className="w-full rounded-xl border border-neutral-200 bg-white px-3.5 py-2.5 text-sm placeholder:text-neutral-400 focus:border-neutral-400 focus:outline-none transition-colors"
+          className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm placeholder:text-neutral-400 focus:border-neutral-400 focus:outline-none transition-colors"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />

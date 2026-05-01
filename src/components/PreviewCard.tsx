@@ -30,7 +30,7 @@ function PromptPayQr({ phone, total }: { phone: string; total: number }) {
   useEffect(() => {
     const payload = generatePromptPayPayload(phone, total);
     QRCode.toDataURL(payload, {
-      width: 240,
+      width: 280,
       margin: 2,
       color: { dark: "#18181b", light: "#ffffff" },
     })
@@ -42,7 +42,7 @@ function PromptPayQr({ phone, total }: { phone: string; total: number }) {
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={dataUrl} alt="QR" style={{ width: 140, height: 140 }} />
+    <img src={dataUrl} alt="QR" style={{ width: 160, height: 160 }} />
   );
 }
 
@@ -72,19 +72,19 @@ const CardContent = ({
       style={{
         background: "#ffffff",
         borderRadius: 20,
-        padding: "40px 36px",
+        padding: "44px 40px",
         fontFamily: "system-ui, -apple-system, sans-serif",
         color: "#18181b",
         width: "100%",
         minWidth: 375,
-        maxWidth: 440,
+        maxWidth: 480,
       }}
     >
       {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: 32 }}>
+      <div style={{ textAlign: "center", marginBottom: 36 }}>
         <div
           style={{
-            fontSize: 20,
+            fontSize: 22,
             fontWeight: 700,
             color: "#09090b",
             lineHeight: 1.3,
@@ -98,7 +98,7 @@ const CardContent = ({
             style={{
               fontSize: 13,
               color: "#a1a1aa",
-              marginTop: 10,
+              marginTop: 12,
               lineHeight: 1.6,
             }}
           >
@@ -109,7 +109,7 @@ const CardContent = ({
           style={{
             fontSize: 11,
             color: "#d4d4d8",
-            marginTop: 10,
+            marginTop: 12,
           }}
         >
           {new Date().toLocaleDateString("en-GB", {
@@ -122,7 +122,7 @@ const CardContent = ({
 
       {/* Items - flat list */}
       {items.length > 0 && (
-        <div style={{ marginBottom: 4 }}>
+        <div>
           {items.map((item) => {
             const cat = getCategoryDisplay(item.category, categories);
             return (
@@ -132,23 +132,23 @@ const CardContent = ({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "10px 0",
+                  padding: "12px 0",
                 }}
               >
                 <div
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 10,
+                    gap: 12,
                     minWidth: 0,
                   }}
                 >
-                  <span style={{ fontSize: 14, width: 20, textAlign: "center" }}>
+                  <span style={{ fontSize: 16, width: 22, textAlign: "center" }}>
                     {cat.icon}
                   </span>
                   <span
                     style={{
-                      fontSize: 14,
+                      fontSize: 15,
                       color: "#3f3f46",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -160,11 +160,11 @@ const CardContent = ({
                 </div>
                 <span
                   style={{
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: 600,
                     color: "#18181b",
                     flexShrink: 0,
-                    marginLeft: 16,
+                    marginLeft: 20,
                     fontVariantNumeric: "tabular-nums",
                   }}
                 >
@@ -179,10 +179,10 @@ const CardContent = ({
       {/* Total */}
       <div
         style={{
-          marginTop: 20,
-          padding: "20px 24px",
+          marginTop: 24,
+          padding: "24px",
           background: "#fafafa",
-          borderRadius: 14,
+          borderRadius: 16,
           textAlign: "center",
         }}
       >
@@ -193,14 +193,14 @@ const CardContent = ({
             color: "#a1a1aa",
             textTransform: "uppercase",
             letterSpacing: 1,
-            marginBottom: 8,
+            marginBottom: 10,
           }}
         >
           Total
         </div>
         <div
           style={{
-            fontSize: 32,
+            fontSize: 36,
             fontWeight: 700,
             color: "#09090b",
             letterSpacing: -0.02,
@@ -216,13 +216,13 @@ const CardContent = ({
       {hasQrSection && (
         <div
           style={{
-            marginTop: 28,
+            marginTop: 32,
             textAlign: "center",
           }}
         >
           <div
             style={{
-              fontSize: 11,
+              fontSize: 12,
               fontWeight: 600,
               color: "#71717a",
               marginBottom: 4,
@@ -232,9 +232,9 @@ const CardContent = ({
           </div>
           <div
             style={{
-              fontSize: 10,
+              fontSize: 11,
               color: "#d4d4d8",
-              marginBottom: 16,
+              marginBottom: 20,
             }}
           >
             สแกนเพื่อโอนเงิน
@@ -244,9 +244,9 @@ const CardContent = ({
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              padding: 16,
+              padding: 20,
               border: "1px solid #f0f0f0",
-              borderRadius: 14,
+              borderRadius: 16,
               background: "#fafafa",
             }}
           >
@@ -256,8 +256,8 @@ const CardContent = ({
                 src={qrSource}
                 alt="QR"
                 style={{
-                  width: 140,
-                  height: 140,
+                  width: 160,
+                  height: 160,
                   objectFit: "contain",
                 }}
               />

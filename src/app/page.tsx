@@ -59,7 +59,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-neutral-50">
       <header className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-neutral-100">
-        <div className="max-w-6xl mx-auto px-4 lg:px-8 h-14 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 lg:px-10 h-14 flex items-center justify-between">
           <h1 className="text-sm font-bold text-neutral-900 tracking-tight">
             Summary
           </h1>
@@ -84,10 +84,10 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 lg:px-8 py-6">
-        <div className="lg:flex lg:gap-8">
-          <div className="lg:w-[58%] lg:min-w-0">
-            <div className="max-w-lg mx-auto lg:mx-0 flex flex-col gap-6">
+      <div className="max-w-7xl mx-auto px-4 lg:px-10 py-8">
+        <div className="lg:flex lg:gap-12">
+          <div className="lg:w-[52%] lg:min-w-0">
+            <div className="max-w-md mx-auto lg:mx-0 flex flex-col gap-8">
               <BillInfoForm
                 billName={billName}
                 note={note}
@@ -109,7 +109,7 @@ export default function Home() {
               />
 
               {items.length > 0 && (
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-6">
                   <TotalDisplay total={total} />
                   <div className="border-t border-neutral-100" />
                   <QRUpload
@@ -125,9 +125,9 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hidden lg:block lg:w-[42%]">
-            <div className="sticky top-20">
-              <div className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider mb-4">
+          <div className="hidden lg:block lg:w-[48%]">
+            <div className="sticky top-24">
+              <div className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider mb-5">
                 Live Preview
               </div>
               <PreviewCard ref={previewRef} {...previewProps} />
