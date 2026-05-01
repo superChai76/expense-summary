@@ -28,66 +28,49 @@ export default function QRUpload({ qrImage, onUpload }: QRUploadProps) {
     }
   };
 
-  const handleRemove = () => {
-    onUpload(null);
-  };
-
   return (
-    <div className="card bg-base-100 shadow-sm">
-      <div className="card-body p-4 gap-3">
-        <h2 className="card-title text-base">QR Code Image</h2>
-        {qrImage ? (
-          <div className="flex flex-col items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={qrImage}
-              alt="Uploaded QR"
-              className="w-40 h-40 object-contain rounded border border-base-300"
-            />
-            <div className="flex gap-2 w-full">
-              <button
-                className="btn btn-outline btn-sm flex-1"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                Replace
-              </button>
-              <button
-                className="btn btn-ghost btn-sm text-error flex-1"
-                onClick={handleRemove}
-              >
-                Remove
-              </button>
-            </div>
-          </div>
-        ) : (
-          <label className="flex flex-col items-center justify-center border-2 border-dashed border-base-300 rounded-lg py-6 cursor-pointer hover:bg-base-200 transition-colors">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 text-base-content/40 mb-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-              />
-            </svg>
-            <span className="text-sm text-base-content/50">
-              Tap to upload QR image
-            </span>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-          </label>
-        )}
+    <div className="flex flex-col gap-2">
+      <div className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">
+        QR Code
       </div>
+      {qrImage ? (
+        <div className="flex flex-col items-center gap-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={qrImage}
+            alt="Uploaded QR"
+            className="w-28 h-28 object-contain rounded-xl border border-neutral-100"
+          />
+          <div className="flex gap-2 w-full">
+            <button
+              className="flex-1 rounded-xl border border-neutral-200 bg-white text-xs font-medium py-2 text-neutral-600 hover:bg-neutral-50 transition-colors"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              Replace
+            </button>
+            <button
+              className="flex-1 rounded-xl border border-neutral-200 bg-white text-xs font-medium py-2 text-red-400 hover:bg-red-50 transition-colors"
+              onClick={() => onUpload(null)}
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      ) : (
+        <label className="flex flex-col items-center justify-center border-2 border-dashed border-neutral-200 rounded-xl py-5 cursor-pointer hover:bg-neutral-50 transition-colors">
+          <span className="text-neutral-300 text-lg mb-1">⬆</span>
+          <span className="text-xs text-neutral-400">
+            Upload QR image
+          </span>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+        </label>
+      )}
     </div>
   );
 }

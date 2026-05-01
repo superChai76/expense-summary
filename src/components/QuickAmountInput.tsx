@@ -9,7 +9,6 @@ interface QuickAmountInputProps {
 
 interface HistoryEntry {
   amount: number;
-  label: string;
 }
 
 export default function QuickAmountInput({
@@ -18,21 +17,18 @@ export default function QuickAmountInput({
 }: QuickAmountInputProps) {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
 
-  const pushHistory = useCallback(
-    (label: string) => {
-      setHistory((prev) => [...prev.slice(-19), { amount, label }]);
-    },
-    [amount]
-  );
+  const pushHistory = useCallback(() => {
+    setHistory((prev) => [...prev.slice(-19), { amount }]);
+  }, [amount]);
 
-  const adjust = (delta: number, label: string) => {
-    pushHistory(label);
+  const adjust = (delta: number) => {
+    pushHistory();
     const next = amount + delta;
     onChange(next < 0 ? 0 : next);
   };
 
   const clear = () => {
-    pushHistory("clear");
+    pushHistory();
     onChange(0);
   };
 
@@ -48,71 +44,58 @@ export default function QuickAmountInput({
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="text-center py-2">
-        <div className="text-3xl font-bold text-primary tabular-nums">
+      <div className="text-center py-1">
+        <div className="text-2xl font-bold text-neutral-900 tabular-nums tracking-tight">
           ฿ {fmt(amount)}
         </div>
       </div>
 
-      <div>
-        <div className="text-[10px] text-base-content/40 uppercase tracking-wider mb-1.5">
-          Quick Add
-        </div>
-        <div className="grid grid-cols-4 gap-2">
-          {[
-            { val: 50, label: "+50" },
-            { val: 100, label: "+100" },
-            { val: 500, label: "+500" },
-            { val: 1000, label: "+1k" },
-          ].map((btn) => (
-            <TapButton
-              key={btn.val}
-              label={btn.label}
-              onClick={() => adjust(btn.val, btn.label)}
-              variant="primary"
-            />
-          ))}
-        </div>
+      <div className="grid grid-cols-4 gap-1.5">
+        {[
+          { val: 50, label: "+50" },
+          { val: 100, label: "+100" },
+          { val: 500, label: "+500" },
+          { val: 1000, label: "+1k" },
+        ].map((btn) => (
+          <button
+            key={btn.val}
+            type="button"
+            onClick={() => adjust(btn.val)}
+            className="rounded-xl bg-neutral-900 text-white text-xs font-medium py-2.5 active:scale-95 transition-transform duration-75"
+          >
+            {btn.label}
+          </button>
+        ))}
       </div>
 
-      <div>
-        <div className="text-[10px] text-base-content/40 uppercase tracking-wider mb-1.5">
-          Adjust
-        </div>
-        <div className="grid grid-cols-5 gap-1.5">
-          {[
-            { delta: -100, label: "-100" },
-            { delta: -50, label: "-50" },
-            { delta: -10, label: "-10" },
-            { delta: -5, label: "-5" },
-            { delta: -1, label: "-1" },
-            { delta: 1, label: "+1" },
-            { delta: 5, label: "+5" },
-            { delta: 10, label: "+10" },
-            { delta: 50, label: "+50" },
-            { delta: 100, label: "+100" },
-          ].map((btn) => (
-            <TapButton
-              key={btn.delta}
-              label={btn.label}
-              onClick={() => adjust(btn.delta, btn.label)}
-              variant={btn.delta > 0 ? "plus" : "minus"}
-            />
-          ))}
-        </div>
+      <div className="grid grid-cols-5 gap-1">
+        {[-100, -50, -10, -5, -1, 1, 5, 10, 50, 100].map((delta) => (
+          <button
+            key={delta}
+            type="button"
+            onClick={() => adjust(delta)}
+            className={`rounded-xl border text-xs font-medium py-2 active:scale-95 transition-transform duration-75 ${
+              delta > 0
+                ? "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
+                : "border-neutral-200 bg-neutral-50 text-neutral-400 hover:bg-neutral-100"
+            }`}
+          >
+            {delta > 0 ? `+${delta}` : `${delta}`}
+          </button>
+        ))}
       </div>
 
       <div className="flex gap-2">
         <button
           type="button"
-          className="btn btn-outline btn-sm flex-1"
+          className="flex-1 rounded-xl border border-neutral-200 bg-white text-xs font-medium py-2 text-neutral-500 hover:bg-neutral-50 transition-colors"
           onClick={clear}
         >
           Clear
         </button>
         <button
           type="button"
-          className="btn btn-ghost btn-sm flex-1"
+          className="flex-1 rounded-xl border border-neutral-200 bg-white text-xs font-medium py-2 text-neutral-500 hover:bg-neutral-50 transition-colors disabled:opacity-40"
           onClick={undo}
           disabled={history.length === 0}
         >
@@ -120,34 +103,5 @@ export default function QuickAmountInput({
         </button>
       </div>
     </div>
-  );
-}
-
-function TapButton({
-  label,
-  onClick,
-  variant,
-}: {
-  label: string;
-  onClick: () => void;
-  variant: "primary" | "plus" | "minus";
-}) {
-  const base =
-    "btn btn-sm active:scale-95 transition-transform duration-75 font-medium";
-
-  const styles: Record<string, string> = {
-    primary: "btn-primary",
-    plus: "btn-ghost bg-success/10 text-success border border-success/20",
-    minus: "btn-ghost bg-error/10 text-error border border-error/20",
-  };
-
-  return (
-    <button
-      type="button"
-      className={`${base} ${styles[variant]}`}
-      onClick={onClick}
-    >
-      {label}
-    </button>
   );
 }

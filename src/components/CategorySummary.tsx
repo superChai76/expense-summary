@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  ExpenseItem,
-  CategoryDef,
-  getCategoryDisplay,
-  getCategoryBadgeClass,
-} from "@/lib/types";
+import { ExpenseItem, CategoryDef, getCategoryDisplay } from "@/lib/types";
 
 interface CategorySummaryProps {
   items: ExpenseItem[];
@@ -26,25 +21,24 @@ export default function CategorySummary({
   if (entries.length === 0) return null;
 
   return (
-    <div className="card bg-base-100 shadow-sm">
-      <div className="card-body p-4 gap-2">
-        <h2 className="card-title text-base">By Category</h2>
-        {entries.map(([catName, total]) => {
-          const cat = getCategoryDisplay(catName, categories);
-          return (
-            <div key={catName} className="flex items-center justify-between">
-              <span
-                className={`badge badge-sm ${getCategoryBadgeClass(catName)}`}
-              >
-                {cat.icon} {cat.name}
-              </span>
-              <span className="text-sm font-medium">
-                ฿{total.toLocaleString("th-TH", { minimumFractionDigits: 2 })}
-              </span>
-            </div>
-          );
-        })}
+    <div className="flex flex-col gap-2">
+      <div className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">
+        By Category
       </div>
+      {entries.map(([catName, total]) => {
+        const cat = getCategoryDisplay(catName, categories);
+        return (
+          <div key={catName} className="flex items-center justify-between py-1">
+            <div className="flex items-center gap-2">
+              <span className="text-xs">{cat.icon}</span>
+              <span className="text-xs text-neutral-500">{cat.name}</span>
+            </div>
+            <span className="text-xs font-medium text-neutral-700 tabular-nums">
+              ฿{total.toLocaleString("th-TH", { minimumFractionDigits: 2 })}
+            </span>
+          </div>
+        );
+      })}
     </div>
   );
 }

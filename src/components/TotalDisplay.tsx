@@ -6,11 +6,11 @@ interface TotalDisplayProps {
 
 export default function TotalDisplay({ total }: TotalDisplayProps) {
   return (
-    <div className="text-center py-3">
-      <div className="text-sm text-base-content/60 mb-1">Total</div>
-      <div className="text-3xl font-bold text-primary">
+    <div className="flex items-baseline justify-between">
+      <span className="text-sm font-medium text-neutral-400">Total</span>
+      <span className="text-2xl font-bold text-neutral-900 tabular-nums tracking-tight">
         ฿{total.toLocaleString("th-TH", { minimumFractionDigits: 2 })}
-      </div>
+      </span>
     </div>
   );
 }

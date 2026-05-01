@@ -2,3 +2,14 @@
 @plugin "daisyui" {
   themes: light --default;
 }
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input,
+textarea,
+select {
+  font-size: 16px !important;
+}

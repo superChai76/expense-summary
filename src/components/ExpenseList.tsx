@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  ExpenseItem,
-  CategoryDef,
-  getCategoryDisplay,
-  getCategoryBadgeClass,
-} from "@/lib/types";
+import { ExpenseItem, CategoryDef, getCategoryDisplay } from "@/lib/types";
 
 interface ExpenseListProps {
   items: ExpenseItem[];
@@ -20,31 +15,34 @@ export default function ExpenseList({
 }: ExpenseListProps) {
   if (items.length === 0) {
     return (
-      <div className="text-center text-base-content/50 py-6 text-sm">
-        No expenses yet. Add one above!
+      <div className="text-center text-neutral-300 py-8 text-sm">
+        No expenses yet
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col">
       {items.map((item) => {
         const cat = getCategoryDisplay(item.category, categories);
         return (
           <div
             key={item.id}
-            className="flex items-center justify-between bg-base-100 rounded-lg px-3 py-2 shadow-sm"
+            className="flex items-center justify-between py-3 border-b border-neutral-100 last:border-b-0"
           >
-            <div className="flex items-center gap-2 min-w-0">
-              <span
-                className={`badge badge-sm ${getCategoryBadgeClass(item.category)}`}
-              >
-                {cat.icon} {cat.name}
-              </span>
-              <span className="text-sm truncate">{item.title}</span>
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="text-sm">{cat.icon}</span>
+              <div className="flex flex-col min-w-0">
+                <span className="text-sm text-neutral-800 truncate leading-tight">
+                  {item.title}
+                </span>
+                <span className="text-[11px] text-neutral-400 leading-tight">
+                  {cat.name}
+                </span>
+              </div>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
-              <span className="text-sm font-semibold">
+            <div className="flex items-center gap-3 shrink-0">
+              <span className="text-sm font-semibold text-neutral-800 tabular-nums">
                 ฿
                 {item.amount.toLocaleString("th-TH", {
                   minimumFractionDigits: 2,
@@ -52,7 +50,7 @@ export default function ExpenseList({
               </span>
               <button
                 onClick={() => onDelete(item.id)}
-                className="btn btn-ghost btn-xs text-error"
+                className="text-neutral-300 hover:text-neutral-500 transition-colors text-xs"
               >
                 ✕
               </button>

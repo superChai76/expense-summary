@@ -16,8 +16,8 @@ function QrImage({ phone, total }: { phone: string; total: number }) {
     const payload = generatePromptPayPayload(phone, total);
     QRCode.toDataURL(payload, {
       width: 200,
-      margin: 1,
-      color: { dark: "#000000", light: "#ffffff" },
+      margin: 2,
+      color: { dark: "#18181b", light: "#ffffff" },
     })
       .then(setDataUrl)
       .catch(() => setDataUrl(null));
@@ -26,15 +26,15 @@ function QrImage({ phone, total }: { phone: string; total: number }) {
   if (!dataUrl) {
     return (
       <div className="flex justify-center py-2">
-        <span className="loading loading-spinner loading-sm" />
+        <span className="loading loading-spinner loading-sm text-neutral-300" />
       </div>
     );
   }
 
   return (
-    <div className="flex justify-center py-2">
+    <div className="flex justify-center py-1">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={dataUrl} alt="PromptPay QR Code" className="w-40 h-40" />
+      <img src={dataUrl} alt="PromptPay QR Code" className="w-28 h-28 rounded-xl" />
     </div>
   );
 }
@@ -55,19 +55,19 @@ export default function QRGenerator({
   };
 
   return (
-    <div className="card bg-base-100 shadow-sm">
-      <div className="card-body p-4 gap-3">
-        <h2 className="card-title text-base">PromptPay QR</h2>
-        <input
-          type="tel"
-          placeholder="Phone number (e.g. 0812345678)"
-          className="input input-bordered input-sm w-full"
-          value={phoneNumber}
-          onChange={handleChange}
-          maxLength={13}
-        />
-        {isValid && <QrImage phone={cleaned} total={total} />}
+    <div className="flex flex-col gap-2">
+      <div className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">
+        PromptPay
       </div>
+      <input
+        type="tel"
+        placeholder="Phone number (e.g. 0812345678)"
+        className="w-full rounded-xl border border-neutral-200 bg-white px-3.5 py-2.5 text-sm placeholder:text-neutral-400 focus:border-neutral-400 focus:outline-none transition-colors"
+        value={phoneNumber}
+        onChange={handleChange}
+        maxLength={13}
+      />
+      {isValid && <QrImage phone={cleaned} total={total} />}
     </div>
   );
 }

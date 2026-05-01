@@ -30,47 +30,46 @@ export default function AddItemForm({
   };
 
   return (
-    <div className="card bg-base-100 shadow-sm">
-      <div className="card-body p-4 gap-3">
-        <h2 className="card-title text-base">Add Expense</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <input
-            type="text"
-            placeholder="Title (e.g. Food, Taxi)"
-            className="input input-bordered input-sm w-full"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
+    <>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="What did you spend on?"
+          className="w-full rounded-xl border border-neutral-200 bg-white px-3.5 py-2.5 text-sm placeholder:text-neutral-400 focus:border-neutral-400 focus:outline-none transition-colors"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
 
-          <QuickAmountInput amount={amount} onChange={setAmount} />
+        <QuickAmountInput amount={amount} onChange={setAmount} />
 
-          <div className="flex gap-2">
-            <select
-              className="select select-bordered select-sm flex-1"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              {categories.map((cat) => (
-                <option key={cat.name} value={cat.name}>
-                  {cat.icon} {cat.name}
-                </option>
-              ))}
-            </select>
-            <button
-              type="button"
-              className="btn btn-outline btn-sm btn-square"
-              onClick={() => setShowAddCategory(true)}
-              title="Add category"
-            >
-              +
-            </button>
-          </div>
-
-          <button type="submit" className="btn btn-primary btn-sm">
-            + Add
+        <div className="flex gap-2">
+          <select
+            className="flex-1 rounded-xl border border-neutral-200 bg-white px-3 py-2.5 text-sm focus:border-neutral-400 focus:outline-none transition-colors"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            {categories.map((cat) => (
+              <option key={cat.name} value={cat.name}>
+                {cat.icon} {cat.name}
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            className="rounded-xl border border-neutral-200 bg-white px-3 text-sm text-neutral-500 hover:bg-neutral-50 active:scale-95 transition-all"
+            onClick={() => setShowAddCategory(true)}
+          >
+            +
           </button>
-        </form>
-      </div>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full rounded-xl bg-neutral-900 text-white text-sm font-medium py-3 hover:bg-neutral-800 active:scale-[0.98] transition-all"
+        >
+          Add Expense
+        </button>
+      </form>
 
       <AddCategoryModal
         open={showAddCategory}
@@ -81,6 +80,6 @@ export default function AddItemForm({
         }}
         existingNames={categories.map((c) => c.name)}
       />
-    </div>
+    </>
   );
 }
