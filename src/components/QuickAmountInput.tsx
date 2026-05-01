@@ -44,58 +44,37 @@ export default function QuickAmountInput({
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="text-center py-1">
-        <div className="text-2xl font-bold text-neutral-900 tabular-nums tracking-tight">
-          ฿ {fmt(amount)}
+      <div className="flex items-center justify-between gap-1">
+        <div className="flex items-center gap-0.5">
+          <ArrowBtn label="‹‹‹" onPress={() => adjust(-100)} />
+          <ArrowBtn label="‹‹" onPress={() => adjust(-10)} />
+          <ArrowBtn label="‹" onPress={() => adjust(-1)} />
         </div>
-      </div>
 
-      <div className="grid grid-cols-4 gap-1.5">
-        {[
-          { val: 50, label: "+50" },
-          { val: 100, label: "+100" },
-          { val: 500, label: "+500" },
-          { val: 1000, label: "+1k" },
-        ].map((btn) => (
-          <button
-            key={btn.val}
-            type="button"
-            onClick={() => adjust(btn.val)}
-            className="rounded-xl bg-neutral-900 text-white text-xs font-medium py-2.5 active:scale-95 transition-transform duration-75"
-          >
-            {btn.label}
-          </button>
-        ))}
-      </div>
+        <div className="px-3 py-1 min-w-[100px] text-center">
+          <div className="text-2xl font-bold text-neutral-900 tabular-nums tracking-tight">
+            ฿{fmt(amount)}
+          </div>
+        </div>
 
-      <div className="grid grid-cols-5 gap-1">
-        {[-100, -50, -10, -5, -1, 1, 5, 10, 50, 100].map((delta) => (
-          <button
-            key={delta}
-            type="button"
-            onClick={() => adjust(delta)}
-            className={`rounded-xl border text-xs font-medium py-2 active:scale-95 transition-transform duration-75 ${
-              delta > 0
-                ? "border-neutral-200 bg-white text-neutral-700 hover:bg-neutral-50"
-                : "border-neutral-200 bg-neutral-50 text-neutral-400 hover:bg-neutral-100"
-            }`}
-          >
-            {delta > 0 ? `+${delta}` : `${delta}`}
-          </button>
-        ))}
+        <div className="flex items-center gap-0.5">
+          <ArrowBtn label="›" onPress={() => adjust(1)} />
+          <ArrowBtn label="››" onPress={() => adjust(10)} />
+          <ArrowBtn label="›››" onPress={() => adjust(100)} />
+        </div>
       </div>
 
       <div className="flex gap-2">
         <button
           type="button"
-          className="flex-1 rounded-xl border border-neutral-200 bg-white text-xs font-medium py-2 text-neutral-500 hover:bg-neutral-50 transition-colors"
+          className="flex-1 rounded-lg border border-neutral-200 bg-white text-[11px] font-medium py-1.5 text-neutral-400 hover:bg-neutral-50 transition-colors"
           onClick={clear}
         >
           Clear
         </button>
         <button
           type="button"
-          className="flex-1 rounded-xl border border-neutral-200 bg-white text-xs font-medium py-2 text-neutral-500 hover:bg-neutral-50 transition-colors disabled:opacity-40"
+          className="flex-1 rounded-lg border border-neutral-200 bg-white text-[11px] font-medium py-1.5 text-neutral-400 hover:bg-neutral-50 transition-colors disabled:opacity-40"
           onClick={undo}
           disabled={history.length === 0}
         >
@@ -103,5 +82,23 @@ export default function QuickAmountInput({
         </button>
       </div>
     </div>
+  );
+}
+
+function ArrowBtn({
+  label,
+  onPress,
+}: {
+  label: string;
+  onPress: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onPress}
+      className="w-10 h-10 flex items-center justify-center rounded-lg text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600 active:scale-90 transition-all duration-75 text-sm font-light tracking-tight select-none"
+    >
+      {label}
+    </button>
   );
 }
