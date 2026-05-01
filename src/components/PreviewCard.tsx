@@ -80,7 +80,7 @@ const CardContent = ({
       style={{
         background: "#ffffff",
         borderRadius: 20,
-        padding: "36px 32px",
+        padding: "40px 36px",
         fontFamily: "system-ui, -apple-system, sans-serif",
         color: "#18181b",
         width: "100%",
@@ -89,7 +89,7 @@ const CardContent = ({
       }}
     >
       {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: 28 }}>
+      <div style={{ textAlign: "center", marginBottom: 32 }}>
         <div
           style={{
             fontSize: 20,
@@ -106,7 +106,7 @@ const CardContent = ({
             style={{
               fontSize: 13,
               color: "#a1a1aa",
-              marginTop: 8,
+              marginTop: 10,
               lineHeight: 1.6,
             }}
           >
@@ -117,7 +117,7 @@ const CardContent = ({
           style={{
             fontSize: 11,
             color: "#d4d4d8",
-            marginTop: 8,
+            marginTop: 10,
           }}
         >
           {new Date().toLocaleDateString("en-GB", {
@@ -130,13 +130,7 @@ const CardContent = ({
 
       {/* Items */}
       {items.length > 0 && (
-        <div
-          style={{
-            borderTop: "1px solid #f4f4f5",
-            paddingTop: 16,
-            paddingBottom: 4,
-          }}
-        >
+        <div style={{ marginBottom: 4 }}>
           {items.map((item) => {
             const cat = getCategoryDisplay(item.category, categories);
             return (
@@ -146,7 +140,7 @@ const CardContent = ({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "8px 0",
+                  padding: "10px 0",
                 }}
               >
                 <div
@@ -192,13 +186,7 @@ const CardContent = ({
 
       {/* Category Summary */}
       {categoryEntries.length > 1 && (
-        <div
-          style={{
-            borderTop: "1px solid #f4f4f5",
-            paddingTop: 14,
-            paddingBottom: 4,
-          }}
-        >
+        <div style={{ paddingTop: 8, paddingBottom: 4 }}>
           <div
             style={{
               fontSize: 9,
@@ -248,40 +236,36 @@ const CardContent = ({
       {/* Total */}
       <div
         style={{
-          borderTop: "2px solid #e4e4e7",
-          marginTop: 4,
-          paddingTop: 20,
+          marginTop: 20,
+          padding: "20px 24px",
+          background: "#fafafa",
+          borderRadius: 14,
+          textAlign: "center",
         }}
       >
         <div
           style={{
-            display: "flex",
-            alignItems: "baseline",
-            justifyContent: "space-between",
+            fontSize: 11,
+            fontWeight: 600,
+            color: "#a1a1aa",
+            textTransform: "uppercase",
+            letterSpacing: 1,
+            marginBottom: 8,
           }}
         >
-          <span
-            style={{
-              fontSize: 13,
-              fontWeight: 600,
-              color: "#71717a",
-              textTransform: "uppercase",
-              letterSpacing: 0.5,
-            }}
-          >
-            Total
-          </span>
-          <span
-            style={{
-              fontSize: 28,
-              fontWeight: 700,
-              color: "#09090b",
-              letterSpacing: -0.02,
-              fontVariantNumeric: "tabular-nums",
-            }}
-          >
-            ฿{fmt(total)}
-          </span>
+          Total
+        </div>
+        <div
+          style={{
+            fontSize: 32,
+            fontWeight: 700,
+            color: "#09090b",
+            letterSpacing: -0.02,
+            fontVariantNumeric: "tabular-nums",
+            lineHeight: 1.1,
+          }}
+        >
+          ฿{fmt(total)}
         </div>
       </div>
 
@@ -289,9 +273,7 @@ const CardContent = ({
       {hasQrSection && (
         <div
           style={{
-            borderTop: "1px solid #f4f4f5",
-            marginTop: 24,
-            paddingTop: 24,
+            marginTop: 28,
             textAlign: "center",
           }}
         >
@@ -320,8 +302,8 @@ const CardContent = ({
               alignItems: "center",
               justifyContent: "center",
               padding: 16,
-              border: "1px solid #f4f4f5",
-              borderRadius: 12,
+              border: "1px solid #f0f0f0",
+              borderRadius: 14,
               background: "#fafafa",
             }}
           >
