@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CategoryDef, DEFAULT_CATEGORIES } from "@/lib/types";
 import AddCategoryModal from "@/components/AddCategoryModal";
+import QuickAmountInput from "@/components/QuickAmountInput";
 
 interface AddItemFormProps {
   categories: CategoryDef[];
@@ -16,20 +17,17 @@ export default function AddItemForm({
   onAddCategory,
 }: AddItemFormProps) {
   const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState<string>(DEFAULT_CATEGORIES[0].name);
   const [showAddCategory, setShowAddCategory] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const numAmount = parseFloat(amount);
-    if (!title.trim() || isNaN(numAmount) || numAmount <= 0) return;
-    onAdd(title.trim(), numAmount, category);
+    if (!title.trim() || amount <= 0) return;
+    onAdd(title.trim(), amount, category);
     setTitle("");
-    setAmount("");
+    setAmount(0);
   };
-
-  const selectedCat = categories.find((c) => c.name === category);
 
   return (
     <div className="card bg-base-100 shadow-sm">
@@ -43,15 +41,8 @@ export default function AddItemForm({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <input
-            type="number"
-            placeholder="Amount"
-            className="input input-bordered input-sm w-full"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            min="0"
-            step="0.01"
-          />
+
+          <QuickAmountInput amount={amount} onChange={setAmount} />
 
           <div className="flex gap-2">
             <select
@@ -74,13 +65,6 @@ export default function AddItemForm({
               +
             </button>
           </div>
-
-          {selectedCat && (
-            <div className="flex items-center gap-1 text-xs text-base-content/50">
-              <span>{selectedCat.icon}</span>
-              <span>{selectedCat.name}</span>
-            </div>
-          )}
 
           <button type="submit" className="btn btn-primary btn-sm">
             + Add
